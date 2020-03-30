@@ -20,13 +20,13 @@ final AuthService _auth = AuthService();
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 70, horizontal: 130),
         child: 
-        RaisedButton(color: Colors.brown[500],
+        RaisedButton(color: Colors.white,
         child: Text('Sign In'),
-        textColor: Colors.white,
+        textColor: Colors.black,
 
          onPressed:() async  {
          dynamic result =  await _auth.signInAnon();
-        if ( result  == null) {
+        if ( result  == false) {
           
           print('error signing in');
 

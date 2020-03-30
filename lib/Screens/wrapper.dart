@@ -12,7 +12,17 @@ class wrapper extends StatelessWidget {
 
     final user = Provider.of<User>(context);
     print (user);
+    
+    //redirects to auth if not signed in , else redirect to home
+    if  (user == null)
+      return Authenticate();
+    else 
+    return Home(); 
+
+
+
     ///return either home or authenticate widget
+    
     return Sign_In();  
 
   }

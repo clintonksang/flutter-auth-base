@@ -33,7 +33,7 @@ final AuthService _auth = AuthService();
         }
         else {
           print ('signed in');
-          print(result);
+          print(result.uid);
         }
         })
       ),

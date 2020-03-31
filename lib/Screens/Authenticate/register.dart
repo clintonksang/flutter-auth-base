@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 
 
 
-class Sign_In extends StatelessWidget {
 
-
-  final Function toggleView;  
-  Sign_In ({this.toggleView});
+class Register extends StatefulWidget {
   
+  final Function toggleView;  
+  Register ({this.toggleView});
+  
+  @override
+  _RegisterState createState() => _RegisterState();
+}
+
+class _RegisterState extends State<Register> {
+
 final AuthService _auth = AuthService();
- final _formkey = GlobalKey<FormState>() ;
+final _formkey = GlobalKey<FormState>() ;
 //textflied state
 
 String email="";
 String password="";
 String error='';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,15 +29,17 @@ String error='';
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text('Sign In '),
+        title: Text('Register',style: TextStyle(color: Colors.white),),
         centerTitle: true,
-       actions: <Widget>[
+        
+        actions: <Widget>[
          FlatButton.icon(onPressed: (){
-           toggleView();
+           widget.toggleView();
          },
           icon: Icon(Icons.person,color: Colors.white),
-           label: Text('Register',style: TextStyle(color: Colors.white),
-           )
+           label: Text('Sign In',style: 
+           TextStyle(color: Colors.white),
+           ),
            )
         ],
 
@@ -44,41 +51,41 @@ String error='';
             key: _formkey,
             child: Column(
               children: <Widget>[
-                SizedBox(height: 20 ),
+                SizedBox(height: 15 ),
                 TextFormField(
                   validator: (val)=> val.isEmpty ? 'Enter your email' :null,
                   onChanged: (val){
-                   
-                   setState(() => email=val);  
+                   setState(()=> password = val); 
                     
-                  }),
+                  }
+                  ),
+                  
                   
                   SizedBox(height: 20 ),
-                TextFormField(
+                TextFormField( 
                   validator: (val)=> val.length <6 ? 'Input atleast 6 charachters long' :null,
                   obscureText: true,
                   onChanged: (val){
+                    setState(()=> email = val);
 
-                 setState (() => password=val);  
                     
                   },
-
+                
                 ),
-                SizedBox(height:20 ),
+                SizedBox(height: 15 ),
                 RaisedButton(
-                  color: Colors.pink ,
-                 onPressed: ()async{
+                  color: Colors.pink,
+                  onPressed: ()  async{
                     if (_formkey.currentState.validate()) {
-                      dynamic result = await _auth.signInWithEmailandpassword(email, password);
-                       if (result==null){
-                        setState(()=>error= 'Wrong email or password');
-                      }  
+                      dynamic result = await _auth.registerWithEmailandpassword(email, password);
+                      if (result==null){
+                        setState(()=>error= 'Please input a valid email');
+                      }
                     }
                   } ,
                   textColor: Colors.white,
-                  child: Text('Sign In',style: TextStyle(color: Colors.white),),
+                  child: Text('Register'),
                 ),
-                
                
 
               ],
@@ -87,6 +94,4 @@ String error='';
       ),
     );
   }
-
-  void setState(String Function() param0) {}
 }

@@ -1,6 +1,6 @@
 import 'package:brewcrew/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:brewcrew/Screens/Services/auth.dart';
 
 class AuthService{
 
@@ -27,11 +27,16 @@ Future signInAnon() async {
   catch(e){
     print (e.toString());
     return null;
-
+ 
   }
 }
 //sign in with email and password
-//register with email and password
+Future signInWithEmailandpassword( String email, String password) async{
+  try{
+   AuthResult result =await _auth.signInWithEmailAndPassword(email: email, password: password);
+  }catch(e){}
+}
+
 //sign out
 
 Future signOut() async{
@@ -40,8 +45,31 @@ Future signOut() async{
     return await _auth.signOut();
 
   }catch(e){
-    print (e.toString()
-    );
+    print (e.toString());
+    return null;
+
+  }
+}
+
+//register with email and password
+Future registerWithEmailandpassword( String email, String password) async{
+  try{
+   AuthResult result =await _auth.createUserWithEmailAndPassword(email: email, password: password);
+  }catch(e){
+    print (e.toString());
+    return null;
+  }
+}
+
+//sign out
+
+Future _signOut() async{
+  try{
+
+    return await _auth.signOut();
+
+  }catch(e){
+    print (e.toString());
     return null;
 
   }
@@ -49,3 +77,5 @@ Future signOut() async{
 
 
 } 
+
+

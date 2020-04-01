@@ -21,7 +21,7 @@ final _formkey = GlobalKey<FormState>() ;
 
 String email="";
 String password="";
-String error='';
+String error='';  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +86,12 @@ String error='';
                   textColor: Colors.white,
                   child: Text('Register'),
                 ),
+                
+              SizedBox(height: 12.0),
+              Text(
+                error,
+                style: TextStyle(color: Colors.red, fontSize: 14.0),
+              )
                
 
               ],

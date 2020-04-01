@@ -1,14 +1,20 @@
+import 'package:brewcrew/Screens/Home/home.dart';
 import 'package:brewcrew/Screens/Services/auth.dart';
 import 'package:flutter/material.dart';
 
 
 
-class Sign_In extends StatelessWidget {
+class SignIn extends StatefulWidget {
 
+  final Function toggleView;
+  SignIn({ this.toggleView });
 
-  final Function toggleView;  
-  Sign_In ({this.toggleView});
-  
+  @override
+  _SignInState createState() => _SignInState();
+}
+
+ class _SignInState extends State<SignIn> {
+
 final AuthService _auth = AuthService();
  final _formkey = GlobalKey<FormState>() ;
 //textflied state
@@ -28,7 +34,7 @@ String error='';
         centerTitle: true,
        actions: <Widget>[
          FlatButton.icon(onPressed: (){
-           toggleView();
+           widget.toggleView();
          },
           icon: Icon(Icons.person,color: Colors.white),
            label: Text('Register',style: TextStyle(color: Colors.white),
@@ -72,7 +78,7 @@ String error='';
                       dynamic result = await _auth.signInWithEmailandpassword(email, password);
                        if (result==null){
                         setState(()=>error= 'Wrong email or password');
-                      }  
+                      } else return Home();
                     }
                   } ,
                   textColor: Colors.white,
@@ -88,5 +94,4 @@ String error='';
     );
   }
 
-  void setState(String Function() param0) {}
 }

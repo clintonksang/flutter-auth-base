@@ -1,6 +1,7 @@
 import 'package:brewcrew/Screens/Home/home.dart';
 import 'package:brewcrew/Screens/Services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:brewcrew/Shared/constants.dart';
 
 
 
@@ -52,6 +53,7 @@ String error='';
               children: <Widget>[
                 SizedBox(height: 20 ),
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText:'Email'),
                   validator: (val)=> val.isEmpty ? 'Enter your email' :null,
                   onChanged: (val){
                    
@@ -61,6 +63,7 @@ String error='';
                   
                   SizedBox(height: 20 ),
                 TextFormField(
+                  decoration: textInputDecoration.copyWith(hintText:'Password'),
                   validator: (val)=> val.length <6 ? 'Input atleast 6 charachters long' :null,
                   obscureText: true,
                   onChanged: (val){

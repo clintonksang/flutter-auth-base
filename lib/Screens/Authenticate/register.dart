@@ -1,6 +1,8 @@
 import 'package:brewcrew/Screens/Services/auth.dart';
 import 'package:brewcrew/Shared/constants.dart';
+import 'package:brewcrew/Shared/loading.dart';
 import 'package:flutter/material.dart';
+
 
 
 
@@ -18,6 +20,7 @@ class _RegisterState extends State<Register> {
 
 final AuthService _auth = AuthService();
 final _formkey = GlobalKey<FormState>() ;
+bool loading =false;
 //textflied state
 
 String email="";
@@ -25,7 +28,8 @@ String password="";
 String error='';  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    
+    return loading ? Loading() :Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -57,7 +61,7 @@ String error='';
                   decoration: textInputDecoration.copyWith(hintText:'Email'),
                   validator: (val)=> val.isEmpty ? 'Enter your email' :null,
                   onChanged: (val){
-                   setState(()=> password = val); 
+                   setState(()=> email = val); 
                     
                   }
                   ),
@@ -69,7 +73,7 @@ String error='';
                   validator: (val)=> val.length <6 ? 'Input atleast 6 charachters long' :null,
                   obscureText: true,
                   onChanged: (val){
-                    setState(()=> email = val);
+                    setState(()=> password = val);
 
                     
                   },
@@ -79,13 +83,20 @@ String error='';
                 RaisedButton(
                   color: Colors.pink,
                   onPressed: ()  async{
-                    if (_formkey.currentState.validate()) {
-                      dynamic result = await _auth.registerWithEmailandpassword(email, password);
-                      if (result==null){
-                        setState(()=>error= 'Please input a valid email');
+                   
+                  if(_formkey.currentState.validate()){
+                    setState(() => loading = true);
+                    dynamic result = await _auth.registerWithEmailandpassword(email, password);
+                    if(result == null) {
+                      setState(() {
+                        loading = false;
+                        error = 'Please supply a valid email';
+                        loading=false;
+                        }
+                        );
                       }
                     }
-                  } ,
+                 } ,
                   textColor: Colors.white,
                   child: Text('Register'),
                 ),

@@ -2,10 +2,12 @@ import 'package:brewcrew/Screens/Home/home.dart';
 import 'package:brewcrew/Screens/Services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:brewcrew/Shared/constants.dart';
+import 'package:brewcrew/Shared/loading.dart';
 
 
 
 class SignIn extends StatefulWidget {
+  
 
   final Function toggleView;
   SignIn({ this.toggleView });
@@ -15,9 +17,13 @@ class SignIn extends StatefulWidget {
 }
 
  class _SignInState extends State<SignIn> {
+ 
 
+//states. They take in setState (()at the bottom ) i.e on pressed
 final AuthService _auth = AuthService();
  final _formkey = GlobalKey<FormState>() ;
+ bool loading =false;
+
 //textflied state
 
 String email="";
@@ -26,12 +32,16 @@ String error='';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.brown[100],
+      
+
+   
+    return loading ? Loading():  Scaffold(
+      backgroundColor: Colors.brown[200],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
         title: Text('Sign In '),
+         
         centerTitle: true,
        actions: <Widget>[
          FlatButton.icon(onPressed: (){
@@ -78,9 +88,17 @@ String error='';
                   color: Colors.pink ,
                  onPressed: ()async{
                     if (_formkey.currentState.validate()) {
+                      setState(() {
+                        loading=true;
+                      });
                       dynamic result = await _auth.signInWithEmailandpassword(email, password);
                        if (result==null){
-                        setState(()=>error= 'Wrong email or password');
+                        setState((){
+                        error = 'Wrong email or password';
+                        loading=false;
+                        }
+                        );
+                      
                       } else return Home();
                     }
                   } ,

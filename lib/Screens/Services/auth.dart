@@ -1,3 +1,4 @@
+import 'package:brewcrew/Screens/Services/database.dart';
 import 'package:brewcrew/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -61,6 +62,7 @@ Future registerWithEmailandpassword( String email, String password) async{
   try{
    AuthResult result =await _auth.createUserWithEmailAndPassword(email: email, password: password);
      FirebaseUser user = result.user;
+     await DatabaseService(uid: user.uid).updateUserData('0', 'new user' , 100);
       return _userfromFirebaseUser(user);
   }catch(e){
     print (e.toString());
@@ -68,19 +70,6 @@ Future registerWithEmailandpassword( String email, String password) async{
   }
 }
 
-//sign out
-
-Future _signOut() async{
-  try{
-
-    return await _auth.signOut();
-
-  }catch(e){
-    print (e.toString());
-    return null;
-
-  }
-}
 
 
 } 

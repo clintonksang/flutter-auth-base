@@ -1,6 +1,7 @@
 import 'package:brewcrew/Screens/Services/auth.dart';
 import 'package:flutter/material.dart';
 
+
 class Home extends StatelessWidget {
 
 
@@ -24,7 +25,10 @@ final AuthService _auth = AuthService();
         ],
         centerTitle: true,
 
-      ), );
+      ), 
+     
+      );
+      
 
     
   }
